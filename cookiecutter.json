@@ -1,0 +1,7 @@
+{
+    "repo_name": "demo_service_rest_backend",
+    "service_name": "demo_service_rest_backend",
+    "email": "jyotiraws@gmail.com",
+    "author": "Jyoti Rathi",
+    "description": "This template creates a scaffolding for an AWS Lambda that will call a REST API backend to interact with domain services."
+}
