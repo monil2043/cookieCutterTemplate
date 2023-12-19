@@ -24,7 +24,6 @@ BUILD_FOLDER = '.build/lambdas/{{cookiecutter.service_name}}'
 COMMON_LAYER_BUILD_FOLDER = '.build/common_layer'
 ENVIRONMENT = 'dev'
 CONFIGURATION_NAME = 'my_conf'
+LAYER_FOLDER = 'dependencies'
 CONFIGURATION_MAX_AGE_MINUTES = '5'  # time to store app config conf in the cache before refetching it
-FEATURE_FLAG_URL='http://localhost:2772/applications/FeatureFlagImplementation/environments/dev/configurations/featureFlagStore'
-CUSTOMER_PROFILE_URL='https://f1gb42bn54.execute-api.us-east-1.amazonaws.com/DEV/GetCustomerProfile?keyType=phoneNumber&keyValue=1234'
 

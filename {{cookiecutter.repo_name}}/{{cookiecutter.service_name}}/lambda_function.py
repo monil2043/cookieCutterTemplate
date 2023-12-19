@@ -20,22 +20,25 @@ from commonDependency import (
 tracer = Tracer()
 logger = Logger()
 metrics = Metrics()
-FEATURE_FLAG_URL = os.environ.get('FEATURE_FLAG_URL')
-CUSTOMER_PROFILE_URL = os.environ.get('CUSTOMER_PROFILE_URL')
+FEATURE_FLAG_URL = os.environ.get('MY_PARAMETER_ENV_VAR')
+
+def isFeatureEnabled():
+    # Call feature flag to get down the values noted
+    featureFlagResponseJsonContent = call_api(FEATURE_FLAG_URL, 'GET')[1]
+    config_data = json.loads(featureFlagResponseJsonContent)
+    performActionImplemented = config_data.get('performActionImplemented', {}).get('enabled', True)
+    customerProfileBackendURL = config_data.get('featureFlagAttribute', {}).get('backendUrl', '')
+    return performActionImplemented,customerProfileBackendURL
 
 
 @tracer.capture_lambda_handler(capture_response=False)
 def lambda_handler(event, context):
     log_request_received(event)
+    isFeatureFlagEnabled, customerProfileBackendURL = isFeatureEnabled()
 
-    #call feature flag to get down the values noted
-    featureFlagResponseJsonContent = (call_api(FEATURE_FLAG_URL, 'GET'))[1]
-    config_data = json.loads(featureFlagResponseJsonContent)
-    performActionImplemented = config_data.get('performActionImplemented', {}).get('enabled', True)
-
-    if performActionImplemented:
+    if isFeatureFlagEnabled:
         statusCodeValue, body, headerValue = (
-            call_api(CUSTOMER_PROFILE_URL, 'GET'))
+            call_api(customerProfileBackendURL, 'GET'))
         return {'statusCode': statusCodeValue, 'body': body, 'headers': headerValue}
     else:
         return handle_not_found('method not found')

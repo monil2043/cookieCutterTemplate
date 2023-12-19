@@ -10,7 +10,7 @@ from cdk.{{cookiecutter.service_name}}.utils import get_construct_name, get_user
 
 class ServiceStack(Stack):
 
-    def __init__(self, scope: Construct, id: str, is_production_env: bool, **kwargs) -> None:
+    def __init__(self, scope: Construct, id: str,ssmParamName: str, is_production_env: bool, **kwargs) -> None:
         super().__init__(scope, id, **kwargs)
         self._add_stack_tags()
 
@@ -26,7 +26,8 @@ class ServiceStack(Stack):
         # )
         self.api = ApiConstruct(
             self,
-            '{{cookiecutter.service_name}}Stack'
+            '{{cookiecutter.service_name}}Stack',
+            ssmParamName
             # get_construct_name(stack_prefix=id, construct_name='Crud'),
             # self.dynamic_configuration.app_name,
         )
