@@ -1,7 +1,7 @@
 import subprocess
 
 def main():
-    print("Running 'git init'")
+    print("Running the subprocess 'git init'")
     subprocess.run(['git', 'init'], check=True)
     print("Initializing project")
     subprocess.run(['make', 'dev'], check=True)
